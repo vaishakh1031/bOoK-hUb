@@ -1,4 +1,4 @@
-#📚 User Guide for Library Management System
+📚 User Guide for Library Management System
 
 1️⃣ How to Access the System
 
