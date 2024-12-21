@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library Management System</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Library Management System</h1>
+    <div id="actions">
+      <button onclick="showSection('addBook')">Add Book</button>
+      <button onclick="showSection('searchBook')">Search Book</button>
+      <button onclick="showSection('borrowBook')">Borrow Book</button>
+      <button onclick="showSection('returnBook')">Return Book</button>
+    </div>
+    <div id="content">
+      <!-- Add Book Section -->
+      <div id="addBook" class="section hidden">
+        <h2>Add a Book</h2>
+        <form onsubmit="addBook(event)">
+          <input type="text" id="title" placeholder="Title" required>
+          <input type="text" id="author" placeholder="Author" required>
+          <input type="text" id="isbn" placeholder="ISBN" required>
+          <button type="submit">Save</button>
+        </form>
+        <p id="addBookMessage"></p>
+      </div>
+
+      <!-- Search Book Section -->
+      <div id="searchBook" class="section hidden">
+        <h2>Search for a Book</h2>
+        <input type="text" id="searchQuery" placeholder="Enter Title, Author, or ISBN">
+        <button onclick="searchBook()">Search</button>
+        <ul id="searchResults"></ul>
+      </div>
+
+      <!-- Borrow Book Section -->
+      <div id="borrowBook" class="section hidden">
+        <h2>Borrow a Book</h2>
+        <input type="text" id="borrowerName" placeholder="Enter your name">
+        <ul id="availableBooks"></ul>
+        <p id="overdueNotification"></p>
+      </div>
+
+      <!-- Return Book Section -->
+      <div id="returnBook" class="section hidden">
+        <h2>Return a Book</h2>
+        <ul id="borrowedBooks"></ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

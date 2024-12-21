@@ -1,0 +1,130 @@
+/* Google Font import */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+/* Body Styling */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+    background-image: url('https://example.com/library-background.jpg'); /* Background Image for entire page */
+    background-size: cover; /* Ensures full screen coverage */
+    background-position: center;
+}
+
+/* Container Styling */
+.container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.8); /* Slight transparency to make background visible */
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Header Styling */
+h1 {
+    text-align: center;
+    font-size: 2.5em;
+    color: #4CAF50;
+    margin-bottom: 20px;
+}
+
+/* Button Styling */
+button {
+    margin: 8px 0;
+    padding: 12px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Section Visibility */
+.section {
+    display: none;
+}
+
+/* Input Fields */
+input[type="text"], input[type="number"] {
+    margin: 10px 0;
+    padding: 12px;
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+/* Search Results */
+#searchResults li {
+    background: #e9f7ef;
+    border: 1px solid #ddd;
+    padding: 12px;
+    margin: 5px 0;
+    border-radius: 8px;
+}
+
+/* Book Icons */
+#searchResults img, #availableBooks img, #borrowedBooks img {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+/* Book Add Success Message */
+#addBookMessage {
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+/* Overdue Notification */
+#overdueNotification {
+    color: #FF5722;
+    font-weight: bold;
+}
+
+/* Book List Styling */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 12px;
+    margin: 5px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Adding some padding and margin to content sections */
+#actions {
+    margin-bottom: 20px;
+}
+
+#actions button {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Add some hover effects for the buttons */
+button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
