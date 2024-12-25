@@ -10,43 +10,36 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Library System</a>
+            <a class="navbar-brand" href="#">Library Management</a>
         </div>
     </nav>
-
     <div class="container my-5">
+        <h1 class="text-center">Library Management System</h1>
         <div class="row">
             <div class="col-md-4">
-                <h3>Add a Book</h3>
-                <form id="addBookForm" class="mb-4">
+                <h3>Add Book</h3>
+                <form id="addBookForm">
                     <div class="mb-3">
-                        <label for="title" class="form-label">Book Title</label>
-                        <input type="text" id="title" class="form-control" placeholder="Enter book title" required>
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" id="title" class="form-control" required>
                     </div>
                     <div class="mb-3">
                         <label for="author" class="form-label">Author</label>
-                        <input type="text" id="author" class="form-control" placeholder="Enter author" required>
+                        <input type="text" id="author" class="form-control" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="isbn" class="form-label">ISBN</label>
-                        <input type="text" id="isbn" class="form-control" placeholder="Enter ISBN" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">Add Book</button>
+                    <button type="submit" class="btn btn-primary">Add Book</button>
                 </form>
             </div>
-
             <div class="col-md-8">
-                <h3>Search and Borrow Books</h3>
+                <h3>Search Books</h3>
                 <div class="input-group mb-3">
-                    <input type="text" id="searchQuery" class="form-control" placeholder="Search by title, author, or ISBN">
-                    <button id="searchBtn" class="btn btn-outline-secondary">Search</button>
+                    <input type="text" id="searchQuery" class="form-control" placeholder="Search books...">
+                    <button class="btn btn-secondary" id="searchBtn">Search</button>
                 </div>
                 <ul id="searchResults" class="list-group"></ul>
             </div>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
