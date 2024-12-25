@@ -43,3 +43,31 @@ document.getElementById('searchBtn').addEventListener('click', async () => {
         resultsList.appendChild(li);
     });
 });
+// Return a book
+async function returnBook(userId, bookId) {
+    if (!userId || !bookId) {
+        console.error("Invalid userId or bookId:", userId, bookId);
+        alert("Failed to return book due to invalid parameters.");
+        return;
+    }
+
+    try {
+        const response = await fetch(`${API_URL}/return_book`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ user_id: parseInt(userId), book_id: parseInt(bookId) })
+        });
+
+        if (response.ok) {
+            alert("Book returned successfully!");
+            fetchUserDetails(); // Refresh user details page
+        } else {
+            const error = await response.json();
+            console.error("Error returning book:", error);
+            alert(`Failed to return book: ${error.message}`);
+        }
+    } catch (err) {
+        console.error("Error during returnBook API call:", err);
+        alert("An unexpected error occurred.");
+    }
+}
