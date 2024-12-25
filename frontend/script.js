@@ -1,31 +1,37 @@
-const API_URL = 'http://127.0.0.1:5000'; // Adjust as needed for backend URL
+const API_URL = 'http://127.0.0.1:5000';
 
-// Add a Book
 document.getElementById('addBookForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const title = document.getElementById('title').value;
     const author = document.getElementById('author').value;
-    const isbn = document.getElementById('isbn').value;
 
-    const response = await fetch(`${API_URL}/add_book`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, author, isbn })
-    });
+    try {
+        const response = await fetch(`${API_URL}/add_book`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title, author })
+        });
 
-    if (response.ok) {
-        alert('Book added successfully!');
-        document.getElementById('addBookForm').reset();
-    } else {
-        alert('Failed to add book.');
+        console.log("Response status:", response.status); // Log response status
+
+        if (response.ok) {
+            const result = await response.json();
+            console.log("Book added:", result); // Log result
+            alert('Book added successfully!');
+            document.getElementById('addBookForm').reset();
+        } else {
+            throw new Error('Failed to add book.');
+        }
+    } catch (error) {
+        console.error('Error adding book:', error);
+        alert('An error occurred while adding the book.');
     }
 });
 
-// Search Books
 document.getElementById('searchBtn').addEventListener('click', async () => {
     const query = document.getElementById('searchQuery').value;
 
-    const response = await fetch(`${API_URL}/search_book?query=${query}`);
+    const response = await fetch(`${API_URL}/search_books?query=${query}`);
     const results = await response.json();
 
     const resultsList = document.getElementById('searchResults');
@@ -33,28 +39,7 @@ document.getElementById('searchBtn').addEventListener('click', async () => {
     results.forEach((book) => {
         const li = document.createElement('li');
         li.className = 'list-group-item';
-        li.innerHTML = `
-            <span><strong>${book.b_title}</strong> by ${book.b_author} (ISBN: ${book.b_isbn})</span>
-            <button class="btn btn-success btn-sm" onclick="borrowBook(${book.b_no})">Borrow</button>
-        `;
+        li.textContent = `${book.title} by ${book.author}`;
         resultsList.appendChild(li);
     });
 });
-
-// Borrow Book
-async function borrowBook(bookId) {
-    const borrower = prompt("Enter your name to borrow this book:");
-    if (!borrower) return;
-
-    const response = await fetch(`${API_URL}/borrow_book`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ b_no: bookId, borrower })
-    });
-
-    if (response.ok) {
-        alert('Book borrowed successfully!');
-    } else {
-        alert('Failed to borrow book.');
-    }
-}
