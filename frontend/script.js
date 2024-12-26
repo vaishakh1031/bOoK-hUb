@@ -88,3 +88,19 @@ document.getElementById("addBookForm")?.addEventListener("submit", async (e) => 
         alert("Failed to add book.");
     }
 });
+
+// Delete a book
+async function deleteBook(bookId) {
+    const response = await fetch(`${API_URL}/delete_book`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: bookId })
+    });
+
+    if (response.ok) {
+        alert("Book deleted successfully!");
+        fetchBooks();
+    } else {
+        alert("Failed to delete book.");
+    }
+}
