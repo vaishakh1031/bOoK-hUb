@@ -89,4 +89,46 @@ document.getElementById("addBookForm")?.addEventListener("submit", async (e) => 
     }
 });
 
+// Initialize on page load
+document.addEventListener("DOMContentLoaded", () => {
+    if (document.getElementById("userList")) {
+        fetchUsers();
+    }
+    if (document.getElementById("bookList")) {
+        fetchBooks();
+    }
+});
+function getUserIdFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get("user_id");
+}
+// Fetch and display user details
+async function fetchUserDetails() {
+    const params = new URLSearchParams(window.location.search);
+    const userId = params.get("user_id");
+
+    const userResponse = await fetch(`${API_URL}/user/${userId}`);
+    const user = await userResponse.json();
+
+    document.getElementById("userName").textContent = user.name;
+
+    // Populate borrowed books
+    const borrowedBooks = document.getElementById("borrowedBooks");
+    borrowedBooks.innerHTML = user.borrowed_books.map(book => `
+        <li class="list-group-item">
+            <span>${book.title} by ${book.author}</span>
+            <button class="btn btn-danger btn-sm" onclick="returnBook(${user.id}, ${book.id})">Return</button>
+        </li>
+    `).join("");
+
+    // Fetch and populate overdue books
+    const overdueResponse = await fetch(`${API_URL}/overdue_books/${user.id}`);
+    const overdueBooks = await overdueResponse.json();
+    const overdueBooksList = document.getElementById("overdueBooks");
+    overdueBooksList.innerHTML = overdueBooks.length > 0
+        ? overdueBooks.map(book => `<li class="list-group-item">${book.title} (Due Date: ${book.due_date})</li>`).join("")
+        : `<li class="list-group-item">No overdue books</li>`;
+}
+
+
 }
