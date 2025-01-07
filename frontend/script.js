@@ -89,4 +89,35 @@ document.getElementById("addBookForm")?.addEventListener("submit", async (e) => 
     }
 });
 
+
+
+// Initialize user details page
+if (window.location.pathname.includes("user_details.html")) {
+    fetchUserDetails();
+}
+// Fetch user records for librarian
+async function fetchUserRecords() {
+    const response = await fetch(`${API_URL}/user_records`);
+    const userRecords = await response.json();
+
+    const userRecordList = document.getElementById("userRecordList");
+    userRecordList.innerHTML = userRecords.map(record => `
+        <tr>
+            <td>${record.name}</td>
+            <td>
+                ${record.borrowed_books.length > 0
+                    ? record.borrowed_books.map(book => `<span>${book.title}</span>`).join(", ")
+                    : "No books borrowed"
+                }
+            </td>
+        </tr>
+    `).join("");
+}
+
+// Initialize librarian page
+if (window.location.pathname.includes("librarian.html")) {
+    fetchBooks();
+    fetchUserRecords();
+}
+
 }
