@@ -1,7 +1,6 @@
 const API_URL = "http://127.0.0.1:5000";
 
 /** USER FUNCTIONALITIES **/
-
 // Fetch users
 async function fetchUsers() {
     const response = await fetch(`${API_URL}/users`);
@@ -41,66 +40,4 @@ document.getElementById("addUserForm")?.addEventListener("submit", async (e) => 
     }
 });
 
-// View user details
-async function viewUser(userId) {
-    const response = await fetch(`${API_URL}/users`);
-    const users = await response.json();
-    const user = users.find(user => user.id === userId);
-
-    
-}
-
-/** LIBRARIAN FUNCTIONALITIES **/
-
-// Fetch books
-async function fetchBooks() {
-    const response = await fetch(`${API_URL}/books`);
-    const books = await response.json();
-    const bookList = document.getElementById("bookList");
-    bookList.innerHTML = "";
-    books.forEach(book => {
-        const li = document.createElement("li");
-        li.className = "list-group-item";
-        li.innerHTML = `
-            <span>${book.title} by ${book.author}</span>
-            <button class="btn btn-danger btn-sm" onclick="deleteBook(${book.id})">Delete</button>
-        `;
-        bookList.appendChild(li);
-    });
-}
-
-// Add a book
-document.getElementById("addBookForm")?.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const title = document.getElementById("bookTitle").value;
-    const author = document.getElementById("bookAuthor").value;
-
-    const response = await fetch(`${API_URL}/add_book`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, author })
-    });
-
-    if (response.ok) {
-        alert("Book added successfully!");
-        fetchBooks();
-    } else {
-        alert("Failed to add book.");
-    }
-});
-
-// Delete a book
-async function deleteBook(bookId) {
-    const response = await fetch(`${API_URL}/delete_book`, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: bookId })
-    });
-
-    if (response.ok) {
-        alert("Book deleted successfully!");
-        fetchBooks();
-    } else {
-        alert("Failed to delete book.");
-    }
 }
