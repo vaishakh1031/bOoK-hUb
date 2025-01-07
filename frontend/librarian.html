@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Librarian - Library Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container my-5">
+        <h1 class="text-center mb-4">Librarian Panel</h1>
+        <div class="row">
+            <!-- Manage Books -->
+            <div class="col-md-6">
+                <h3>Manage Books</h3>
+                <form id="addBookForm" class="mb-3">
+                    <div class="mb-3">
+                        <label for="bookTitle" class="form-label">Title</label>
+                        <input type="text" id="bookTitle" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="bookAuthor" class="form-label">Author</label>
+                        <input type="text" id="bookAuthor" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Add Book</button>
+                </form>
+                <h4>All Books</h4>
+                <ul id="bookList" class="list-group">
+                    <!-- Books will be dynamically populated here -->
+                </ul>
+            </div>
+            <!-- Manage Users -->
+            <div class="col-md-6">
+                <h3>Manage User Records</h3>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Borrowed Books</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userRecordList">
+                        <!-- User records will be dynamically populated -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
