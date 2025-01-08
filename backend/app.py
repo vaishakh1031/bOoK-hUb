@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from database import load_data, save_data
 from flask_cors import CORS  # Import Flask-CORS
 
-app = Flask(__name__)
+app = Flask(_name_)
 CORS(app)
 
 
@@ -59,5 +59,5 @@ def return_book():
             return jsonify({"message": "Book returned successfully!", "book": book})
     return jsonify({"message": "Book not found!"}), 404
 
-if __name__ == "_main_":
+if _name_ == "_main_":
     app.run(debug=True)
