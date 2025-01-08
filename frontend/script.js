@@ -89,6 +89,22 @@ document.getElementById("addBookForm")?.addEventListener("submit", async (e) => 
     }
 });
 
+// Delete a book
+async function deleteBook(bookId) {
+    const response = await fetch(`${API_URL}/delete_book`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: bookId })
+    });
+
+    if (response.ok) {
+        alert("Book deleted successfully!");
+        fetchBooks();
+    } else {
+        alert("Failed to delete book.");
+    }
+}
+
 // Initialize on page load
 document.addEventListener("DOMContentLoaded", () => {
     if (document.getElementById("userList")) {
@@ -130,5 +146,111 @@ async function fetchUserDetails() {
         : `<li class="list-group-item">No overdue books</li>`;
 }
 
+// Return a book
+async function returnBook(userId, bookId) {
+    if (!userId || !bookId) {
+        console.error("Invalid userId or bookId:", userId, bookId);
+        alert("Failed to return book due to invalid parameters.");
+        return;
+    }
 
+    try {
+        const response = await fetch(`${API_URL}/return_book`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ user_id: parseInt(userId), book_id: parseInt(bookId) })
+        });
+
+        if (response.ok) {
+            alert("Book returned successfully!");
+            fetchUserDetails(); // Refresh user details page
+        } else {
+            const error = await response.json();
+            console.error("Error returning book:", error);
+            alert(`Failed to return book: ${error.message}`);
+        }
+    } catch (err) {
+        console.error("Error during returnBook API call:", err);
+        alert("An unexpected error occurred.");
+    }
+}
+
+// Search and borrow books
+document.getElementById("searchBooksForm")?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const query = document.getElementById("searchQuery").value;
+
+    const response = await fetch(`${API_URL}/books`);
+    const books = await response.json();
+    const searchResults = books.filter(book => book.title.includes(query) || book.author.includes(query));
+
+    const searchResultsList = document.getElementById("searchResults");
+    searchResultsList.innerHTML = searchResults.map(book => `
+        <li class="list-group-item">
+            <span>${book.title} by ${book.author}</span>
+            <button class="btn btn-success btn-sm" onclick="borrowBook(${book.id})">Borrow</button>
+        </li>
+    `).join("");
+});
+
+// Borrow a book
+async function borrowBook(bookId) {
+    const userId = getUserIdFromURL(); // Extract user_id from the URL
+
+    if (!userId || !bookId) {
+        console.error("Invalid userId or bookId:", userId, bookId);
+        alert("Failed to borrow book due to invalid parameters.");
+        return;
+    }
+
+    try {
+        const response = await fetch(`${API_URL}/borrow_book`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ user_id: parseInt(userId), book_id: parseInt(bookId) })
+        });
+
+        if (response.ok) {
+            alert("Book borrowed successfully!");
+            fetchUserDetails(); // Refresh user details page
+        } else {
+            const error = await response.json();
+            console.error("Error borrowing book:", error);
+            alert(`Failed to borrow book: ${error.message}`);
+        }
+    } catch (err) {
+        console.error("Error during borrowBook API call:", err);
+        alert("An unexpected error occurred.");
+    }
+}
+
+
+
+// Initialize user details page
+if (window.location.pathname.includes("user_details.html")) {
+    fetchUserDetails();
+}
+// Fetch user records for librarian
+async function fetchUserRecords() {
+    const response = await fetch(`${API_URL}/user_records`);
+    const userRecords = await response.json();
+
+    const userRecordList = document.getElementById("userRecordList");
+    userRecordList.innerHTML = userRecords.map(record => `
+        <tr>
+            <td>${record.name}</td>
+            <td>
+                ${record.borrowed_books.length > 0
+                    ? record.borrowed_books.map(book => `<span>${book.title}</span>`).join(", ")
+                    : "No books borrowed"
+                }
+            </td>
+        </tr>
+    `).join("");
+}
+
+// Initialize librarian page
+if (window.location.pathname.includes("librarian.html")) {
+    fetchBooks();
+    fetchUserRecords();
 }
